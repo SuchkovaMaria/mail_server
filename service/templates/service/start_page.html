@@ -1,0 +1,48 @@
+{% extends 'catalog/home.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="row text-center mt-3">
+    {% if user.is_authenticated %}
+        {% if perms.blog.add_productpost %}
+    <div class="col-3">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Рассылки</h4>
+            </div>
+            <div class="card-body">
+                <p class="card-text" style = "color: #332d9a"></h5>Общее количество: {{newslette_all}}</h5></p>
+                <p class="card-text"></h5>Активные: {{newslette_activ}}</h5></p>
+                <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product_detail' product.pk %}">Передти к рассылкам</a>
+            </div>
+        </div>
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Сообщения</h4>
+            </div>
+            <div class="card-body">
+                <p class="card-text" style = "color: #332d9a"></h5>Общее количество: {{message_all}}</h5></p>
+                <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product_detail' product.pk %}">Передти к сообщениям</a>
+            </div>
+        </div>
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Адресаты</h4>
+            </div>
+            <div class="card-body">
+                <p class="card-text" style = "color: #332d9a"></h5>Общее количество: {{recipient_all}}</h5></p>
+                <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product_detail' product.pk %}">Передти к сообщениям</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
