@@ -1,0 +1,28 @@
+{% extends 'service/home.html' %}
+{% block content %}
+
+<div>
+       <a class="p-2 btn btn-outline-primary" href="{% url 'service:recipient_create' %}" role="button">Добавить адресата</a>
+       <a class="p-2 btn btn-outline-primary" href="{% url 'service:home' %}" role="button">Вернуться на главную</a>
+</div>
+<div class="card mt-3" style="width: 65rem;">
+  <div class="card-header text-center" style = "background: #626b7c; color: #eaecf1">
+    Твои адресаты
+  </div>
+  <ul class="list-group list-group-flush">
+      {% for recipient in object_list %}
+          {% if user == recipient.owner %}
+              <li class="list-group-item">ФИО:  {{ recipient.name }}
+              <p class="card-text" style = "color: #332d9a"><h5>Email: {{ recipient.email }}</h5></p>
+              <p class="card-text" style = "color: #332d9a"><h5>Комментарий: {{ recipient.comment }}</h5></p>
+                  <div class="d-flex justify-content-end">
+                      <a class="p-2 btn btn-outline-primary" href="{% url 'service:recipient_update' recipient.pk %}">Редактировать</a>
+                      <a class="btn btn-outline-danger btn-sm" href="{% url 'service:recipient_delete' recipient.pk %}">Удалить</a>
+                  </div>
+              </li>
+          {% endif %}
+      {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}

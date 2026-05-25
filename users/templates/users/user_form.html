@@ -1,0 +1,17 @@
+{% extends 'service/home.html' %}
+{% block content %}
+<div class="row text">
+    <form method="post" enctype="multipart/form-data">
+        <div class="card mb-4 box-shadow">
+            <div class="card-body">
+                {% csrf_token %}
+                {{form.as_p}}
+            </div>
+            <button type="submit" class="p-2 btn btn-outline-primary">
+              Зарегистрироваться
+            </button>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'service:home' %}" role="button">Вернуться на главную</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

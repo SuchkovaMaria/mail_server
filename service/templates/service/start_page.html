@@ -1,40 +1,86 @@
-{% extends 'catalog/home.html' %}
-{% load my_tags %}
+{% extends 'service/home.html' %}
 {% block content %}
+
 <div class="row text-center mt-3">
-    {% if user.is_authenticated %}
-        {% if perms.blog.add_productpost %}
-    <div class="col-3">
+    {% if perms.service.can_activity_status %}
         <div class="card mb-4 box-shadow">
             <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Рассылки</h4>
+                    <h4 class="my-0 font-weight-normal">Пользователи</h4>
+                </div>
+                <div class="card-body">
+                     <p class="card-text" style = "color: #332d9a"></h5>Общее количество: {{user_all}}</h5></p>
+                     <a class="p-2 btn btn-outline-primary" href="{% url 'service:mod_send_list' %}" role="button">Подробнее</a>
+                </div>
             </div>
-            <div class="card-body">
-                <p class="card-text" style = "color: #332d9a"></h5>Общее количество: {{newslette_all}}</h5></p>
-                <p class="card-text"></h5>Активные: {{newslette_activ}}</h5></p>
-                <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product_detail' product.pk %}">Передти к рассылкам</a>
+    {% else %}
+            <div class="col-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Рассылки</h4>
+                    </div>
+                    <div class="card-body">
+                        {% if user.is_authenticated %}
+                            {% if user.block_status == False %}
+                                <p class="card-text" style = "color: #332d9a"></h5>Общее количество: {{newslette_all}}</h5></p>
+                                <p class="card-text"></h5> Активные: {{newslette_activ}}</h5></p>
+                                <a class="p-2 btn btn-outline-primary" href="{% url 'service:send_list' %}" role="button">Перейдти к рассылкам</a>
+                            {% else %}
+                                <p class="card-text" style = "color: #332d9a"></h5>Не доступно</h5></p>
+                            {% endif %}
+                        {% else %}
+                            <p class="card-text" style = "color: #332d9a"></h5>Общее количество: Здесь будет отражено количество ваших рассылок</h5></p>
+                            <p class="card-text" style = "color: #332d9a"></h5>Активные: Здесь будет отражено количество ваших запущенных рассылок</h5></p>
+                            <p class="card-text" style = "color: #332d9a"></h5>После регистрайии/входа вы сможете управлять ими</h5></p>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="card mb-4 box-shadow">
-            <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Сообщения</h4>
+            <div class="col-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Сообщения</h4>
+                    </div>
+                    <div class="card-body">
+                        {% if user.is_authenticated %}
+                            {% if user.block_status == False %}
+                                <p class="card-text" style = "color: #332d9a"></h5>Общее количество: {{message_all}}</h5></p>
+                                <a class="p-2 btn btn-outline-primary" href="{% url 'service:message_list' %}">Передти к сообщениям</a>
+                            {% else %}
+                                <p class="card-text" style = "color: #332d9a"></h5>Не доступно</h5></p>
+                            {% endif %}
+                        {% else %}
+                            <p class="card-text" style = "color: #332d9a"></h5>Общее количество: Здесь будет отражено количество ваших сообщений</h5></p>
+                            <p class="card-text" style = "color: #332d9a"></h5>После регистрайии/входа вы сможете управлять ими</h5></p>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <p class="card-text" style = "color: #332d9a"></h5>Общее количество: {{message_all}}</h5></p>
-                <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product_detail' product.pk %}">Передти к сообщениям</a>
+            <div class="col-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Адресаты</h4>
+                    </div>
+                    <div class="card-body">
+                        {% if user.is_authenticated %}
+                            {% if user.block_status == False %}
+                                <p class="card-text" style = "color: #332d9a"></h5>Общее количество: {{recipient_all}}</h5></p>
+                                <a class="p-2 btn btn-outline-primary" href="{% url 'service:recipient_list' %}">Передти к сообщениям</a>
+                            {% else %}
+                                <p class="card-text" style = "color: #332d9a"></h5>Не доступно</h5></p>
+                            {% endif %}
+                        {% else %}
+                            <p class="card-text" style = "color: #332d9a"></h5>Общее количество: Здесь будет отражено количество ваших адресатов</h5></p>
+                            <p class="card-text" style = "color: #332d9a"></h5>После регистрайии/входа вы сможете управлять ими</h5></p>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="card mb-4 box-shadow">
-            <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Адресаты</h4>
-            </div>
-            <div class="card-body">
-                <p class="card-text" style = "color: #332d9a"></h5>Общее количество: {{recipient_all}}</h5></p>
-                <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product_detail' product.pk %}">Передти к сообщениям</a>
-            </div>
-        </div>
-    </div>
+        {% if user.block_status == True %}
+            <p class="card-text" style = "color: #332d9a"></h5>Увы, но вас заблокировал модератор. Свяжитесь с нами по телефону: 8 9хх ххх хх хх</h5></p>
+        {% endif %}
+    {% endif %}
 </div>
+{% endblock %}
 
 
 

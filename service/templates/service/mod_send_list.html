@@ -1,0 +1,60 @@
+{% extends 'service/home.html' %}
+{% block content %}
+<div>
+    <a class="p-2 btn btn-outline-primary" href="{% url 'service:home' %}" role="button">Вернуться на главную</a>
+    <a class="p-2 btn btn-outline-primary" href="{% url 'service:all_recipient_list' %}" role="button">Все клиенты</a>
+</div>
+<div class="card mt-3" style="width: 65rem;">
+  <div class="card-header text-center" style = "background: #626b7c; color: #eaecf1">Все рассылки всех пользователей</div>
+  <ul class="list-group list-group-flush">
+      {% for newslette in object_list %}
+                   <li class="list-group-item">Рассылаемое сообщение: {{newslette.message.theme}}
+                       <p class="card-text" style = "color: #332d9a"></h5>Сообщение содержит: {{newslette.message.body}}</h5></p>
+                       <p class="card-text" style = "color: #332d9a"></h5>{{newslette.owner}}</h5></p>
+                       <div class="d-flex justify-content-end">
+                           {% if newslette.owner.block_status == False %}
+                                <span style="font-size: 14px; color: #6c757d;">Статус пользователя: не заблокирован </span><br>
+                           {% else %}
+                                <span style="font-size: 14px; color: #6c757d;">Статус пользователя: заблокирован </span><br>
+                           {% endif %}
+                       </div>
+                       <p class="card-text" style = "color: #332d9a"></h5>{{newslette.owner.}}</h5></p>
+                       <div class="d-flex justify-content-end">
+                            <form action="{% url 'service:block_user' newslette.pk %}" method="post">
+                                {% csrf_token %}
+                                <button class="p-2 btn btn-outline-primary" type="submit">Блокировать пользователя</button>
+                            </form>
+                       </div>
+                       <div class="d-flex justify-content-end mt-3">
+                            <form action="{% url 'service:disconnect' newslette.pk %}" method="post">
+                                {% csrf_token %}
+                                <button class="p-2 btn btn-outline-primary" type="submit">Отлючить</button>
+                            </form>
+                       </div>
+                       <div>
+                          <p class="card-text" style = "color: #332d9a"></h5>Клиенты рассылки:</h5></p>
+                          {% for recipient in newslette.recipients.all %}
+                               <p class="card-text md-3" style = "color: #332d9a"></h5>{{recipient.name}}</h5></p>
+                          {% endfor %}
+                          <div class="d-flex justify-content-end">
+                                <span style="font-size: 14px; color: #6c757d;">Статус отправки: {{newslette.dispatch_status}}</span><br>
+                          </div>
+                          <div class="d-flex justify-content-end">
+                               {% if newslette.activity_status == True %}
+                                    <span style="font-size: 14px; color: #6c757d;">Статус активности рассылки: активна </span><br>
+                               {% elif newslette.activity_status == False %}
+                                    <span style="font-size: 14px; color: #6c757d;">Статус активности рассылки: отключена</span><br>
+                               {% endif %}
+                          </div>
+                          {% if newslette.dispatch_status == 'Успешно выполнена' %}
+                              <div class="d-flex justify-content-end">
+                                   <span style="font-size: 14px; color: #6c757d;">Количество отправленных писем: {{newslette.recipients.all|length}}</span><br>
+                              </div>
+                          {% endif %}
+                       </div>
+                   </li>
+      {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}

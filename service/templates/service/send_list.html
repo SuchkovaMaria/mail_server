@@ -1,0 +1,56 @@
+{% extends 'service/home.html' %}
+{% block content %}
+
+<div>
+       <a class="p-2 btn btn-outline-primary" href="{% url 'service:newsletter_create' %}" role="button">Добавить рассылку</a>
+       <a class="p-2 btn btn-outline-primary" href="{% url 'service:home' %}" role="button">Вернуться на главную</a>
+</div>
+<div class="card mt-3" style="width: 65rem;">
+  <div class="card-header text-center" style = "background: #626b7c; color: #eaecf1">
+    Твои рассылки
+  </div>
+  <ul class="list-group list-group-flush">
+      {% for newslette in object_list %}
+          {% if user == newslette.owner %}
+              <li class="list-group-item">Рассылаемое сообщение: {{newslette.message.theme}}
+
+                  <div class="d-flex justify-content-end">
+                      {% if newslette.activity_status == True and newslette.status == 'Запущена' %}
+                          <form method="post" action="{% url 'service:start_mailing' newslette.pk %}">
+                              {% csrf_token %}
+                            <button class="p-2 btn btn-outline-primary">Запустить</button>
+                          </form>
+                      {% elif newslette.activity_status == False %}
+                          <div class="d-flex justify-content-end">
+                                 <span style="font-size: 14px; color: #6c757d;">Отключена модератом</span><br>
+                          </div>
+                      {% endif %}
+                  </div>
+                  <div class="d-flex justify-content-end mt-3">
+                      <a class="p-2 btn btn-outline-primary" href="{% url 'service:newsletter_update' newslette.pk %}">Редактировать</a>
+                  </div>
+                  <div class="d-flex justify-content-end mt-3">
+                      <a class="btn btn-outline-danger btn-sm" href="{% url 'service:newsletter_delete' newslette.pk %}">Удалить</a>
+                  </div>
+                  <div>
+                      <p class="card-text" style = "color: #332d9a"></h5>Клиенты рассылки:</h5></p>
+                      {% for recipient in newslette.recipients.all %}
+                          <p class="card-text md-3" style = "color: #332d9a"></h5>{{recipient.name}}</h5></p>
+                      {% endfor %}
+                      <div class="d-flex justify-content-end">
+
+                              <span style="font-size: 14px; color: #6c757d;">Статус отправки: {{newslette.dispatch_status}}</span><br>
+                      </div>
+                      {% if newslette.dispatch_status == 'Успешно выполнена' %}
+                            <div class="d-flex justify-content-end">
+                                 <span style="font-size: 14px; color: #6c757d;">Количество отправленных писем: {{newslette.recipients.all|length}}</span><br>
+                            </div>
+                      {% endif %}
+                  </div>
+              </li>
+          {% endif %}
+      {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}
