@@ -1,0 +1,27 @@
+{% extends 'service/home.html' %}
+{% block content %}
+
+<div>
+       <a class="p-2 btn btn-outline-primary" href="{% url 'service:message_create' %}" role="button">Добавить сообщение</a>
+       <a class="p-2 btn btn-outline-primary" href="{% url 'service:home' %}" role="button">Вернуться на главную</a>
+</div>
+<div class="card mt-3" style="width: 65rem;">
+  <div class="card-header text-center" style = "background: #626b7c; color: #eaecf1">
+    Твои сообщения
+  </div>
+  <ul class="list-group list-group-flush">
+      {% for message in object_list %}
+      {% if user == message.owner %}
+              <li class="list-group-item"> {{ message.theme }}
+              <p class="card-text" style = "color: #332d9a"></h5>{{ message.body }}</h5></p>
+                  <div class="d-flex justify-content-end">
+                      <a class="p-2 btn btn-outline-primary" href="{% url 'service:message_update' message.pk %}">Редактировать</a>
+                      <a class="btn btn-outline-danger btn-sm" href="{% url 'service:message_delete' message.pk %}">Удалить</a>
+                  </div>
+              </li>
+          {% endif %}
+      {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}

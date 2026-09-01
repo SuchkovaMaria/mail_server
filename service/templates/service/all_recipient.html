@@ -1,0 +1,21 @@
+{% extends 'service/home.html' %}
+{% block content %}
+
+<div>
+       <a class="p-2 btn btn-outline-primary" href="{% url 'service:mod_send_list' %}" role="button">Вернуться к списку рассылок пользователей</a>
+</div>
+<div class="card mt-3" style="width: 65rem;">
+  <div class="card-header text-center" style = "background: #626b7c; color: #eaecf1">
+    Все клиенты
+  </div>
+  <ul class="list-group list-group-flush">
+      {% for recipient in object_list %}
+          <li class="list-group-item">ФИО:  {{ recipient.name }}
+          <p class="card-text" style = "color: #332d9a"><h5>Email: {{ recipient.email }}</h5></p>
+          <p class="card-text" style = "color: #332d9a"><h5>Комментарий: {{ recipient.comment }}</h5></p>
+          </li>
+      {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'service/home.html' %}
+{% block content %}
+<div class="row text-center">
+    <form method="post" enctype="multipart/form-data">
+        <div class="card mb-4 box-shadow">
+            <p class="card-text"></h5>Уверены, что хотите удалить {{ object.theme }}?</h5></p>
+            <div class="card-body">
+                {% csrf_token %}
+            </div>
+            <button class="p-2 btn btn-outline-primary">Удалить</button>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'service:message_list' %}" role="button">Вернуться к сообщениям</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

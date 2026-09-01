@@ -1,0 +1,22 @@
+{% extends 'service/home.html' %}
+{% block content %}
+
+<div class="row text">
+    <form method="post" enctype="multipart/form-data">
+        <div class="card mb-4 box-shadow">
+            <div class="card-body">
+                {% csrf_token %}
+                {{form.as_p}}
+            </div>
+            <button type="submit" class="p-2 btn btn-outline-primary">
+              {% if object %}
+              Сохранить
+              {% else %}
+              Создать
+              {% endif %}
+            </button>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'service:message_list' %}" role="button">Вернуться к списку рассылок</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

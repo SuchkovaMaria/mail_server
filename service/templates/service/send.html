@@ -1,0 +1,23 @@
+{% extends 'service/home.html' %}
+
+{% block content %}
+<div class="row text-center mt-3">
+
+
+    <div class="col-3">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">{{newslette.message.theme}}</h4>
+            </div>
+            <div class="card-body">
+                <p class="card-text" style = "color: #332d9a"></h5>Клиенты: {{newslette.recipients}}</h5></p>
+                <form method="post" action="{% url 'service:startmailing' 1 %}">
+                        {% csrf_token %}
+                    <button class="p-2 btn btn-outline-primary">Разослать</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
